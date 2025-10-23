@@ -1,3 +1,4 @@
+import { GoogleGenAI } from "@google/genai";
 import MarkdownIt from 'markdown-it';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -13,8 +14,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const profileOptionsList = document.getElementById('profile-options') as HTMLUListElement;
     const selectedProfileText = document.getElementById('selected-profile-text') as HTMLSpanElement;
 
-    // Initialisation du parser Markdown
+    // Initialisation du parser Markdown et du client Gemini
     const md = new MarkdownIt();
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
     // --- Dropdown Logic ---
     const toggleDropdown = (show: boolean) => {
@@ -78,23 +80,39 @@ document.addEventListener('DOMContentLoaded', () => {
             synthaseContainer.hidden = true;
             loader.hidden = false;
             resultsQueryText.textContent = 'Recherche en cours...';
+            iaContentPlaceholder.innerHTML = '';
             
             try {
-                // Call the backend API
-                const response = await fetch('http://localhost:8080/api/search', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ query, profile }),
+                // Prompt Engineering : On guide l'IA pour obtenir de meilleurs résultats
+                const systemInstruction = `
+                    Vous êtes un expert de classe mondiale en droit du travail international et en mobilité professionnelle.
+                    Votre rôle est de fournir des réponses précises, structurées et directement exploitables basées sur la question et le profil de l'utilisateur.
+                    Mettez en évidence les points clés, les démarches administratives et les conseils pratiques.
+                    La réponse doit être formulée en français.
+                `;
+
+                const userPrompt = `
+                    En tant que "${profile}", je me pose la question suivante concernant le travail en Guinée : "${query}".
+
+                    Fournissez une synthèse structurée qui aborde les points suivants si pertinents :
+                    1.  **Visa et Permis de Travail :** Procédures, documents requis, délais estimés.
+                    2.  **Marché du Travail :** Opportunités pour un profil de ${profile}, salaires moyens, secteurs porteurs.
+                    3.  **Contrat de Travail :** Spécificités locales, points de vigilance.
+                    4.  **Fiscalité :** Taux d'imposition sur le revenu, taxes locales.
+                    5.  **Qualité de Vie :** Coût de la vie, logement, sécurité.
+                    
+                    Votre réponse doit être claire et facile à comprendre.
+                `;
+                
+                const response = await ai.models.generateContent({
+                    model: 'gemini-2.5-pro',
+                    contents: userPrompt,
+                    config: {
+                        systemInstruction: systemInstruction,
+                    }
                 });
 
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.error || `Erreur HTTP: ${response.status}`);
-                }
-
-                const data = await response.json();
+                const aiResponseText = response.text;
                 
                 // Update UI with the result
                 loader.hidden = true;
@@ -104,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 resultsQueryText.textContent = `${formattedQuery}.`;
 
                 // Render the Markdown response from the AI as HTML
-                iaContentPlaceholder.innerHTML = md.render(data.result);
+                iaContentPlaceholder.innerHTML = md.render(aiResponseText);
 
             } catch (error) {
                 console.error('Erreur lors de la récupération des données:', error);
@@ -113,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 resultsQueryText.textContent = `Erreur.`;
                 iaContentPlaceholder.innerHTML = `
                     <p style="color: red;"><strong>Impossible de contacter le service d'IA.</strong></p>
-                    <p>Veuillez vérifier que le serveur backend est bien démarré et que la clé API est correcte. Détails de l'erreur : ${(error as Error).message}</p>
+                    <p>Veuillez vérifier votre connexion internet et que la clé API est correcte. Détails de l'erreur : ${(error as Error).message}</p>
                 `;
             }
         });

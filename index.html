@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobilité & Carrière</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+    <!-- Ajout de la librairie pour le rendu Markdown -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/14.1.0/markdown-it.min.js"></script>
+<script type="importmap">
+{
+  "imports": {
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.26.0",
+    "express": "https://aistudiocdn.com/express@^5.1.0",
+    "dotenv": "https://aistudiocdn.com/dotenv@^17.2.3",
+    "cors": "https://aistudiocdn.com/cors@^2.8.5",
+    "markdown-it": "https://aistudiocdn.com/markdown-it@^14.1.0"
+  }
+}
+</script>
+</head>
+<body>
+
+    <header class="container">
+        <a href="#" class="logo" role="banner" aria-label="Page d'accueil SyneRHgie">
+             <img src="https://i.imgur.com/vHq1y43.png" alt="SyneRHgie Logo">
+        </a>
+        
+        <nav>
+            <a href="#">Accueil</a>
+            <a href="#">Offre d'emploi</a>
+            <a href="#">Formation</a>
+            <a href="#">Actualités</a>
+            <a href="#">A propos</a>
+            <a href="#">Nous contacter</a>
+            <button class="btn btn-primary">Créer un compte</button>
+        </nav>
+    </header>
+
+    <main class="container">
+
+        <section class="hero-section">
+            <h1>Mobilité & Carrière, <span>Propulsé</span> par l'IA</h1>
+            <p>Accédez instantanément à des informations contextuelles sur le travail et la vie dans le pays de votre choix.</p>
+        </section>
+
+        <section class="search-form-container">
+            <form action="#" method="POST">
+                
+                <div class="search-bar">
+                    <span class="icon" role="img" aria-label="Idée">💡</span>
+                    <input type="text" placeholder="Posez votre question sur la mobilité internationale..." value="Parle moi du travail en Guinée">
+                    
+                    <div class="country-select" title="Changer de pays">
+                        <span class="flag" role="img" aria-label="Drapeau Guinée">🇬🇳</span>
+                        <span>▼</span>
+                    </div>
+
+                    <button type="submit" class="btn btn-secondary">Rechercher</button>
+                </div>
+
+                <div class="personalization-bar">
+                    <span class="personalization-label">Personnaliser ma recherche:</span>
+                    <span>Je suis</span>
+                    <div class="profile-selector-container">
+                        <button type="button" class="profile-selector" id="profile-selector-btn" aria-haspopup="listbox" aria-expanded="false">
+                            <span id="selected-profile-text" class="profile-selector-text">Comptable</span>
+                            <span class="profile-selector-arrow">▼</span>
+                        </button>
+                        <ul id="profile-options" class="profile-options-list" role="listbox" hidden>
+                            <li role="option" tabindex="0">Comptable</li>
+                            <li role="option" tabindex="0">Recruteur RH</li>
+                            <li role="option" tabindex="0">Étudiant</li>
+                            <li role="option" tabindex="0">Développeur</li>
+                            <li role="option" tabindex="0">Investisseur</li>
+                            <li role="option" tabindex="0">Autre</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </form>
+        </section>
+
+        <section class="results-section hidden">
+            <h2><span id="results-pre-text">Résultats IA pour :</span> <strong id="results-query-text"></strong></h2>
+
+            <div class="result-content-wrapper">
+                <div id="loader" class="loader" hidden></div>
+                <div class="synthase-container" id="synthase-container" hidden>
+                    <div class="synthase-header">
+                        <span class="icon" role="img" aria-label="Synthèse">✨</span>
+                        <h3>Synthèse Personnalisée de l'IA</h3>
+                    </div>
+
+                    <div id="ia-content-placeholder">
+                        <!-- Le contenu généré par l'IA apparaîtra ici via le back-end -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <script type="module" src="index.tsx"></script>
+</body>
+</html>

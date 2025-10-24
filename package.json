@@ -2,21 +2,22 @@
   "name": "ia-plan-du-travail-synerhgie",
   "version": "1.0.0",
   "type": "module",
+  "engines": { "node": ">=20" },
   "scripts": {
     "gcp-build": "npm run build",
     "build": "tsc",
     "start": "node dist/server.js"
   },
   "dependencies": {
-    "express": "^4.19.2",
-    "markdown-it": "^14.1.0",
+    "@google/genai": "^1.26.0",
     "dotenv": "^16.4.5",
-    "@google/genai": "^1.26.0"
+    "express": "^4.19.2",
+    "markdown-it": "^14.1.0"
   },
   "devDependencies": {
-    "typescript": "^5.4.5",
     "@types/express": "^4.17.21",
+    "@types/markdown-it": "^14.1.1",
     "@types/node": "^20.12.12",
-    "@types/markdown-it": "^14.1.1"
+    "typescript": "^5.4.5"
   }
 }

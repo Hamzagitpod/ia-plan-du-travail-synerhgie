@@ -1,7 +1,6 @@
 import MarkdownIt from "markdown-it";
 
 document.addEventListener("DOMContentLoaded", () => {
-  // DOM
   const searchForm = document.querySelector(".search-form-container form") as HTMLFormElement | null;
   const resultsSection = document.querySelector(".results-section") as HTMLElement | null;
   const resultsQueryText = document.getElementById("results-query-text") as HTMLElement | null;
@@ -15,7 +14,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const md = new MarkdownIt();
 
-  // Dropdown helpers (avec gardes)
   const toggleDropdown = (show: boolean) => {
     if (!profileOptionsList || !profileSelectorBtn) return;
     profileOptionsList.hidden = !show;
@@ -56,7 +54,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Form submit → appelle le backend /api/ask
   searchForm?.addEventListener("submit", async (event) => {
     event.preventDefault();
 
@@ -95,7 +92,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (iaContentPlaceholder) iaContentPlaceholder.innerHTML = md.render(aiResponseText);
     } catch (err: any) {
-      console.error("Erreur /api/ask:", err);
       if (loader) loader.hidden = true;
       if (synthaseContainer) synthaseContainer.hidden = false;
       if (resultsQueryText) resultsQueryText.textContent = `Erreur.`;

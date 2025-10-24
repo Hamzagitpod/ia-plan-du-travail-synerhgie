@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const searchInput = searchForm.querySelector('input[type="text"]') as HTMLInputElement;
             const query = searchInput.value;
-            const profile = selectedProfileText.textContent?.trim();
+            const profile = (selectedProfileText.textContent || '').trim();
 
             if (!query || !profile) {
                 alert("Veuillez entrer une question et sélectionner un profil.");

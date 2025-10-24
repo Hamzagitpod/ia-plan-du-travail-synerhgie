@@ -1,5 +1,5 @@
-// FIX: Aliased express Request and Response types to avoid name collision with DOM types.
-import express, { Request as ExpressRequest, Response as ExpressResponse } from "express";
+// FIX: Import the default export of express. This allows using express.Request and express.Response to avoid type collisions with DOM.
+import express from "express";
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -16,13 +16,14 @@ const projectRoot = path.join(__dirname, '..');
 app.use(express.static(projectRoot));
 
 // API health check route
-// FIX: Using aliased types to correctly type the request and response objects, fixing overload and property errors.
-app.get("/api/health", (_req: ExpressRequest, res: ExpressResponse) => {
-  res.send("API Synerhgie OK ✅");
+// FIX: Using fully qualified types from the 'express' namespace to correctly type the request and response objects, fixing overload and property errors.
+app.get("/api/health", (_req: express.Request, res: express.Response) => {
+  res.send("API Synergie OK ✅");
 });
 
 // For any other route, fall back to serving index.html. This is crucial for the app to load correctly.
-app.get('*', (req: ExpressRequest, res: ExpressResponse) => {
+// FIX: Using fully qualified types from the 'express' namespace to correctly type the request and response objects.
+app.get('*', (req: express.Request, res: express.Response) => {
     res.sendFile(path.join(projectRoot, 'index.html'));
 });
 

@@ -6,7 +6,15 @@
     "rootDir": "./",
     "outDir": "./dist",
     "esModuleInterop": true,
-    "strict": true
+    "strict": true,
+    "lib": [
+      "ES2020",
+      "DOM"
+    ],
+    "jsx": "react"
   },
-  "include": ["server.ts"]
+  "include": [
+    "server.ts",
+    "index.tsx"
+  ]
 }

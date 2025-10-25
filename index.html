@@ -9,20 +9,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="index.css"/>
 
-  <!-- Import-map uniquement pour markdown-it côté navigateur -->
+  <!-- Import map: uniquement markdown-it pour le navigateur -->
   <script type="importmap">
-{
-  "imports": {
-    "markdown-it": "https://aistudiocdn.com/markdown-it@14.1.0",
-    "express": "https://aistudiocdn.com/express@^5.1.0",
-    "path": "https://aistudiocdn.com/path@^0.12.7",
-    "url": "https://aistudiocdn.com/url@^0.11.4",
-    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.27.0",
-    "dotenv/": "https://aistudiocdn.com/dotenv@^17.2.3/",
-    "process": "https://aistudiocdn.com/process@^0.11.10"
+  {
+    "imports": {
+      "markdown-it": "https://aistudiocdn.com/markdown-it@14.1.0"
+    }
   }
-}
-</script>
+  </script>
 </head>
 <body>
   <header class="container">
@@ -94,7 +88,7 @@
     </section>
   </main>
 
-  <!-- ton JS compilé -->
+  <!-- JS compilé par tsc -->
   <script type="module" src="dist/index.js"></script>
 </body>
 </html>

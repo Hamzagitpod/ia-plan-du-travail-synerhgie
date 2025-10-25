@@ -4,6 +4,8 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { GoogleGenAI, GenerateContentResponse } from "@google/genai";
 import "dotenv/config";
+// FIX: Import 'process' to provide types for the process global in an ES module context.
+import process from "process";
 
 // --- Clé API (Cloud Run: Variables & secrets -> API_KEY) ---
 const apiKey = process.env.API_KEY;

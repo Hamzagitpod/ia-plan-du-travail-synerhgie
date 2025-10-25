@@ -7,10 +7,11 @@
     "outDir": "./dist",
     "esModuleInterop": true,
     "strict": true,
-    "types": ["node", "dom"],
     "forceConsistentCasingInFileNames": true,
-    "lib": ["ES2022", "DOM"],
-    "jsx": "preserve"
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "jsx": "preserve",
+    "types": ["node"],            // ⬅️ retirer "dom" d'ici
+    "skipLibCheck": true          // (optionnel) pour éviter des frictions de d.ts
   },
   "include": ["server.ts", "index.tsx"]
 }
